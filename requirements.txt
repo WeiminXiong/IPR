@@ -1,0 +1,8 @@
+transformers==4.37.2
+flash-attn==2.4.2
+trl==0.7.7
+ai2thor==2.1.0
+opencv-python
+alfworld
+intercode-bench
+gdown
