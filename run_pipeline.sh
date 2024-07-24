@@ -16,6 +16,12 @@ save_dir=/home/azureuser/weimin/agentpipeline/checkpoints_${task}/    # checkpoi
 save_path=/home/azureuser/weimin/agentpipeline/experiments/${model_name}-${task}-sft-step-entire-monte-carlo-beta-0.1-lr3e-6/  # output save path
 logs_path=${save_path}logs
 
+if [ "$task" == "intercode_sql" ]; then
+    docker stop docker-env-sql_ic_ctr
+    docker rm docker-env-sql_ic_ctr
+    bash setup_sql.sh
+fi
+
 if [ -d ${save_path} ]; then
     rm -r ${save_path}
 fi
@@ -85,6 +91,14 @@ monte_carlo_explore_model_name=${cur_model_name}-monte-carlo-explore
 for i in {1..6}; do
     # Part 3: Base agent explore stage
     # launch the fastchat model worker
+
+    if [ "$task" == "intercode_sql" ]; then
+        docker stop docker-env-sql_ic_ctr
+        docker rm docker-env-sql_ic_ctr
+        bash setup_sql.sh
+        sleep 60
+    fi
+
     explore_model_name=${cur_model_name}-explore
 
     for ((j=0;j<${sample_num_workers};j=j+1)); do
@@ -161,6 +175,13 @@ for i in {1..6}; do
         rm ${logs_path}/worker_pid.txt
     fi
 
+    if [ "$task" == "intercode_sql" ]; then
+        docker stop docker-env-sql_ic_ctr
+        docker rm docker-env-sql_ic_ctr
+        bash setup_sql.sh
+        sleep 60
+    fi
+
     fs_worker_port=21012
     worker_idx=0
     for ((j=0;j<${sample_num_workers};j=j+1)); do
@@ -232,6 +253,13 @@ for i in {1..6}; do
     beta=0.1
     lr=3e-6
 
+    if [ "$task" == "intercode_sql" ]; then
+        docker stop docker-env-sql_ic_ctr
+        docker rm docker-env-sql_ic_ctr
+        bash setup_sql.sh
+        sleep 60
+    fi
+    
     dpo_model_name=${sft_model_name}-dpo-iter-${i}
 
     python -m torch.distributed.run --nproc_per_node=${node_num} --master_port=20002 fastchat/train/train_dpo.py \

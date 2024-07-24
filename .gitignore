@@ -179,6 +179,7 @@ checkpoints_webshop/
 
 experiments/
 outputs/
+wandb/
 construct_preference_reward_model_webshop.py
 construct_preference.py
 debug.sh
