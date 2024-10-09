@@ -1,18 +1,23 @@
 # 1. Install Python dependencies
-pip install torch==2.1.0 --index-url https://download.pytorch.org/whl/cu118
-pip install vllm==0.4.0.post1
+conda create -n IPR python==3.9
+conda activate IPR
+
+# pip install vllm==0.4.0.post1
+# pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu118
 
 cd textworld
-pip install -e .
+pip install .
 cd ..
 
 pip install -r requirements.txt
-pip install "fschat[model_worker,webui]"
+pip install "fschat[model_worker]"
 pip install -e ".[train]"
 
 cd eval_agent
 pip install -r requirements.txt
 cd ..
+
+pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu118
 
 cd envs/webshop
 pip install -e .
@@ -36,7 +41,7 @@ unzip alfworld_data.zip
 cd ../../..
 cd eval_agent/data/intercode_sql
 gdown https://drive.google.com/uc?id=19AyZnrniD_NXSbV8mHPh5FgoXjN-5WvP
-unzip intercode_sql_data.zip
+unzip intercodesql_data.zip
 
 # 5. Create docker image for SQL environment
 cd ../../..

@@ -68,7 +68,7 @@ fi
 
 # Part 2: Evaluate SFT agent
 fs_worker_port=21012
-python -u -m fastchat.serve.model_worker --model-path ${save_dir}${sft_model_name} --port ${fs_worker_port} --worker-address http://localhost:${fs_worker_port} >> ${logs_path}/model_worker.log 2>&1 &
+python -u -m fastchat.serve.vllm_worker --model-path ${save_dir}${sft_model_name} --port ${fs_worker_port} --worker-address http://localhost:${fs_worker_port} >> ${logs_path}/model_worker.log 2>&1 &
 
 fs_worker_pid=$!
 sleep 60
@@ -116,7 +116,7 @@ for i in {1..6}; do
     worker_idx=0
     for ((j=0;j<${sample_num_workers};j=j+1)); do
         echo "Launch the model worker on port ${fs_worker_port}"
-        CUDA_VISIBLE_DEVICES=$((${worker_idx} % ${sample_node_num})) python -u -m fastchat.serve.model_worker \
+        CUDA_VISIBLE_DEVICES=$((${worker_idx} % ${sample_node_num})) python -u -m fastchat.serve.vllm_worker \
             --model-path ${save_dir}${explore_model_name}-${j} \
             --port ${fs_worker_port} \
             --worker-address http://localhost:${fs_worker_port} >> ${logs_path}/model_worker-${j}.log 2>&1 &
@@ -186,7 +186,7 @@ for i in {1..6}; do
     worker_idx=0
     for ((j=0;j<${sample_num_workers};j=j+1)); do
         echo "Launch the model worker on port ${fs_worker_port}"
-        CUDA_VISIBLE_DEVICES=$((${worker_idx} % ${sample_num_workers})) python -u -m fastchat.serve.model_worker \
+        CUDA_VISIBLE_DEVICES=$((${worker_idx} % ${sample_num_workers})) python -u -m fastchat.serve.vllm_worker \
             --model-path ${save_dir}${monte_carlo_explore_model_name}-${j} \
             --port ${fs_worker_port} \
             --worker-address http://localhost:${fs_worker_port} >> ${logs_path}/model_worker-${j}.log 2>&1 &
@@ -292,7 +292,7 @@ for i in {1..6}; do
 
     # Part 6: Evaluate the agent
     fs_worker_port=21012
-    python -u -m fastchat.serve.model_worker --model-path ${save_dir}${dpo_model_name} --port ${fs_worker_port} --worker-address http://localhost:${fs_worker_port} >> ${logs_path}/model_worker.log 2>&1 &
+    python -u -m fastchat.serve.vllm_worker --model-path ${save_dir}${dpo_model_name} --port ${fs_worker_port} --worker-address http://localhost:${fs_worker_port} >> ${logs_path}/model_worker.log 2>&1 &
 
     fs_worker_pid=$!
     sleep 60
