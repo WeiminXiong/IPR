@@ -77,6 +77,30 @@ Finally, evaluate the agent
 python -m eval_agent.main --agent_config fastchat --model_name <YOUR_MODEL_NAME> --exp_config <TASK_NAME> --split test --verbose
 ```
 
+## 🧩 vLLM Integration
+
+You can use vLLM as an optimized worker implementation in FastChat. It offers advanced continuous batching and a much higher (~10x) throughput. 
+
+First, install vLLM.
+```
+pip install vllm==0.4.0.post1
+```
+
+However, the version of vLLM may conflict with the version of PyTorch and transformers. It is necessary to reinstall both the transformers and PyTorch libraries.
+
+```
+pip install transformers==4.37.2
+pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu118
+```
+
+
+The terminal would display a version conflict between vLLM, PyTorch, and transformers libraries. You can ignore this warning and proceed to run the `run_pipeline_vllm.sh` script.
+
+```
+bash run_pipeline_vllm.sh
+```
+
+
 ## 📑 The Data Format for Training the Agent
 
 ### SFT data
