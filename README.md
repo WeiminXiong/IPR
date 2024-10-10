@@ -77,7 +77,7 @@ Finally, evaluate the agent
 python -m eval_agent.main --agent_config fastchat --model_name <YOUR_MODEL_NAME> --exp_config <TASK_NAME> --split test --verbose
 ```
 
-## 🧩 vLLM Integration
+## 🔁 vLLM Integration
 
 You can use vLLM as an optimized worker implementation in FastChat. It offers advanced continuous batching and a much higher (~10x) throughput. 
 
