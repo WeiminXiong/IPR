@@ -45,7 +45,7 @@ The bash script `run_pipeline.sh` implements the IPR pipeline. For example, you 
 bash run_pipeline.sh
 ```
 
-The script performs the pipeline of ETO:
+The script performs the pipeline of IPR:
 
 1. SFT phase: using the expert trajectories to conduct SFT to get the base agent
 2. Evaluate SFT agent
